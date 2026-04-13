@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Video Presentation</title>
+    <style>
+        /* Resets default margins and ensures the page takes up exactly 100% of the screen */
+        body, html {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            height: 100%;
+            background-color: #ffffff; /* Blank white background */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden; /* Prevents any scrolling */
+        }
+
+        /* Makes the video completely responsive, fitting perfectly on any device */
+        video {
+            max-width: 100vw;
+            max-height: 100vh;
+            width: auto;
+            height: auto;
+            object-fit: contain; /* Ensures the video maintains its aspect ratio without stretching */
+            outline: none;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- 
+      The video tag includes:
+      - autoplay: Attempts to start the video immediately
+      - playsinline: Ensures it plays within the webpage on iOS devices rather than opening fullscreen automatically
+      Notice there is NO "loop" attribute, so it only plays once.
+    -->
+    <video id="mainVideo" autoplay playsinline>
+        <source src="Youth%20Engagement%20Issue%20(Spectrum).mp4" type="video/mp4">
+        Your browser does not support the video tag.
+    </video>
+
+    <script>
+        const video = document.getElementById('mainVideo');
+
+        window.addEventListener('DOMContentLoaded', () => {
+            const playPromise = video.play();
+
+            if (playPromise !== undefined) {
+                playPromise.then(() => {
+                    // Autoplay started successfully!
+                }).catch(error => {
+                    // Autoplay was blocked by the browser. 
+                    // Since controls are completely hidden, clicking anywhere on the screen will start the video.
+                    document.body.addEventListener('click', () => {
+                        video.play();
+                    }, { once: true });
+                });
+            }
+        });
+    </script>
+
+</body>
+</html>
